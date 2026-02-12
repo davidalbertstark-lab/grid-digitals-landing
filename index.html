@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Grid Digitals</title>
+<link rel="stylesheet" href="styles/index.css">
+</head>
+<body>
+
+<canvas id="bg"></canvas>
+
+<header role="banner">
+  <div class="nav-glass" role="navigation" aria-label="Main navigation">
+    <a href="#" class="logo" aria-label="Grid Digitals home">
+      <div class="logo-badge" aria-hidden="true">GD</div>
+      <span>Grid <strong style="opacity:.88">Digitals</strong></span>
+    </a>
+
+    <nav class="navbar" id="primaryNav">
+      <a href="#" class="magnetic active" data-key="home">Home</a>
+      <a href="#about" class="magnetic" data-key="about">About</a>
+      <a href="#work" class="magnetic" data-key="portfolio">Portfolio</a>
+      <a href="#pricing" class="magnetic" data-key="pricing">Pricing</a>
+      <a href="programs.html" class="magnetic" data-key="contact" target="_blank">Programs</a>
+    </nav>
+
+    <div class="nav-actions">
+      <button class="icon-btn" id="searchBtn" aria-label="Search">
+        🔍
+      </button>
+      <button class="cta" id="ctaPrimary" >Contact Us</button>
+
+<!--     <script>
+      document.getElementById("ctaPrimary").addEventListener("click", 
+      function() {
+      window.open("https://tally.so/r/3yLLL0", "_blank", "noopener,noreferrer");
+      });
+    </script> -->
+
+
+      <button class="hamburger" id="hamburger" aria-expanded="false" aria-controls="mobileMenu" aria-label="Open menu">
+        <svg width="22" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"></path>
+        </svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- Mobile menu overlay -->
+<div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+  <div class="panel" role="dialog" aria-modal="true" aria-label="Mobile menu panel">
+    <div style="display:flex; justify-content:space-between; align-items:center; gap:16px; margin-bottom:20px">
+      <a class="logo" href="#"><div class="logo-badge">GD</div><span>Grid Digitals</span></a>
+      <button class="icon-btn" id="mobileClose" aria-label="Close menu">✕</button>
+    </div>
+
+    <div class="mobile-links" id="mobileLinks">
+      <a href="#" data-key="home">Home</a>
+      <a href="#about" data-key="about">About</a>
+      <a href="#work" data-key="portfolio">Portfolio</a>
+      <a href="#pricing" data-key="pricing">Pricing</a>
+      <a href="programs.html" data-key="contact" target="_blank">Programs</a>
+    </div>
+
+    <div style="margin-top:auto; display:flex; gap:12px; align-items:center; justify-content:center;">
+      <button class="cta"></button>
+    </div>
+  </div>
+</div>
+
+<!-- Cursor follower -->
+<div class="cursor-follower" id="cursorFollower" aria-hidden="true"></div>
+  </section>
+
+<section id="hero" aria-label="Hero — Accelerate your business" style="position:relative; z-index:12;">
+  <div class="hero-wrap">
+    <canvas id="heroGrid" aria-hidden="true"></canvas>
+
+<!-- CONTENT -->
+<div class="hero-content">
+  <div class="copy">
+
+    <!-- Typing headline -->
+    <h1 class="typed-headline" aria-live="polite" aria-atomic="true">
+      <span id="typedText" class="typed-text" aria-hidden="false"></span>
+      <span class="caret" aria-hidden="true">|</span>
+    </h1>
+
+    <p class="subhead">
+      Unlock your Growth With Tailored<br class="mobile-br">Digital Solutions.
+    </p>
+
+    <div class="cta-row" role="group" aria-label="Primary calls to action">
+      <button class="btn-mad" id="startToday">Start Today</button>
+      <button class="btn-case" id="caseStudies" aria-haspopup="true" aria-expanded="false">Case Studies</button>
+    </div>
+  </div>
+</div>
+    </div>
+  </div>
+</section>
+
+
+  <section class="offers">
+    <h1 class="offers-title">Your Growth Partner — Built For Digital Visibility</h1>
+
+    <div class="offer">
+      <h2>Business Website Setup</h2>
+      <p>Launch your Online Presence with A Professional Website that represents your Brand. Conversion Focused, Mobile Friendly and Fast-loading pages.</p>
+      <div class="offer-image"></div>
+      <a href="#" class="see-offer">See Offers →</a>
+    </div>
+
+    <div class="offer">
+      <h2>Google Business Profile & Visibility</h2>
+      <p>Optimize Google Business Profile to Attract more Local Customers & Dominate Local Rankings. Appear at the top Local Search results, Maps and Directories.</p>
+      <div class="offer-image"></div>
+      <a href="#" class="see-offer">See Offers →</a>
+    </div>
+
+    <div class="offer">
+      <h2>SEO (Basic & Extended)</h2>
+      <p>Dominate Website Search. Attract more Organic Traffic and get noticed by Customers actively searching for your Services. Track performance and get regular reporting For GRID'S Seo Strategies.</p>
+      <div class="offer-image"></div>
+      <a href="#" class="see-offer">See Offers →</a>
+    </div>
+
+    <div class="offer">
+      <h2>Lead Capture Funnel</h2>
+      <p>Convert Visitors into leads with Smart, Automated Funnels. Get Custom Landing pages Optimized for Conversions, lead Capture Forms and CTAs strategies. Track performance To Optimize Funnel Efficiency.</p>
+      <div class="offer-image"></div>
+      <a href="#" class="see-offer">See Offers →</a>
+    </div>
+
+    <div class="offer">
+      <h2>Social Media Marketing</h2>
+      <p>Build Visibility. Not just Posts. Grid helps Brands Create Content Strategies that Engage real Audiences and Grow Visibility Organically.</p>
+      <div class="offer-image"></div>
+      <a href="#" class="see-offer">See Offers →</a>
+    </div>
+
+    <div class="offer">
+      <h2>Digital Marketing</h2>
+      <p>Drive Leads with Paid Campaigns. GRID helps Businesses Plan, Manage and Optimize Paid Campaigns across Search Engines, Social Media & Display Networks to Generate Measurable Leads & Conversions.</p>
+      <div class="offer-image"></div>
+      <a href="#" class="see-offer">See Offers →</a>
+    </div>
+
+    <div class="offer">
+      <h2>Analytics & Reporting</h2>
+      <p>Track What Matters. Monitor Performance Across Digital Channels. Track your Website Health, Social Media and Marketing Performance. Get Custom Dashboards tailored to your Business Goals and Optimize Performance Monitoring to Spot Opportunities and Issues.</p>
+      <div class="offer-image"></div>
+      <a href="#" class="see-offer">See Offers →</a>
+    </div>
+
+    <a href="#" class="see-all">See all Offers →</a>
+  </section>
+
+
+<section id="solutions" aria-label="GRID Solutions — Underground Intelligence" style="position:relative; overflow:hidden; padding:80px 20px; background:#0a0a0a; color:#fff;">
+  <div class="solutions-wrap" style="max-width:1200px; margin:0 auto; display:grid; gap:60px;">
+
+    <h2 id="solutionsTitle" style="font-size:clamp(2rem,5vw,3rem); font-weight:900; text-transform:uppercase; text-align:center; color:#00f2fe; letter-spacing:.05em; position:relative; overflow:visible;">
+      Solutions that Creates Results, Not Noise
+    </h2>
+
+    <p style="text-align:center; max-width:800px; margin:0 auto; font-size:1.05rem; font-family:'Orbitron', sans-serif; color:#aaa; line-height:1.6;">
+      We are a Team of Purpose Driven Builders With a Shared belief that small businesses often struggle to grow because they lack clear, practical guidance and the right tools to scale. Our mission is to revolutionize how emerging brands approach growth, giving them the strategies, systems, and support they need to compete confidently.
+    </p>
+
+
+    <div class="grid-block" style="display:grid; gap:40px;">
+      <div class="solution-card" style="position:relative; overflow:hidden; padding:40px; background:#111; border-radius:16px; box-shadow:0 8px 40px rgba(0,242,254,0.1);">
+        <h3 style="font-size:1.8rem; font-weight:800; color:#00f2fe; margin-bottom:16px;">GRIDS BIG DATA</h3>
+        <p style="font-weight:600; color:#fff; margin-bottom:16px;">Lead With Insights that Drives Growth Faster, Smarter, and Deeper</p>
+        <p style="color:#aaa; margin-bottom:16px;">With Our In-house Infrastructure, We Power Our Growth Intelligence, Enhance Data With Our System and Expand Our Database Continuously.</p>
+        <a href="#" style="color:#00b050; font-weight:800; text-decoration:none; position:relative;">Explore Grid Insights →</a>
+
+        <!-- Underground JS canvas -->
+        <canvas class="gridCanvas" style="position:absolute; inset:0; width:100%; height:100%; z-index:0; pointer-events:none;"></canvas>
+      </div>
+
+
+      <div class="metrics" style="display:grid; grid-template-columns:repeat(auto-fit,minmax(120px,1fr)); gap:20px; text-align:center; color:#0cf;">
+        <div><h4>#1</h4><p>Growth Intelligence<br><span style="font-weight:400; color:#aaa;">Source: GRID Proprietary Infrastructure</span></p></div>
+        <div><h4>#6</h4><p>Brands in portfolio<br><span style="font-weight:400; color:#aaa;">Source: GRID Programs</span></p></div>
+        <div><h4>#96.5k</h4><p>Campaigns and Impressions</p></div>
+        <div><h4>#12+</h4><p>Active Digital Channels Monitored</p></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<section id="edgeSection" style="--accent-1:#00b050; --accent-2:#00f2fe; --bg:#0b0f14; --muted:#aaa; position:relative; overflow:hidden;">
+  <!-- Background Canvas -->
+  <canvas id="edgeBg" style="position:absolute; inset:0; width:100%; height:100%; z-index:0; pointer-events:none;"></canvas>
+
+  <div class="edge-wrap" style="position:relative; z-index:5; max-width:1200px; margin:0 auto; padding:96px 20px;">
+    <!-- Title -->
+    <h2 id="edgeTitle" style="font-size:2.8rem; font-family:'Orbitron', sans-serif; font-weight:900; text-align:center; margin-bottom:24px; color:#fff;">
+      Whatever the Chaos, <span style="color:var(--accent-2);">Grid Gives You an Edge</span>
+    </h2>
+
+    <!-- Subtitle -->
+    <p style="max-width:880px; margin:0 auto 56px; text-align:center; font-size:1.05rem; line-height:1.6; color:var(--muted); font-family:'Inter',sans-serif;">
+      A living platform that translates raw data into growth ops and automations — so teams move faster, campaigns get smarter, and execution scales without collapse.
+    </p>
+
+    <!-- Persona Grid -->
+    <div class="persona-grid" style="display:grid; grid-template-columns:repeat(auto-fit,minmax(320px,1fr)); gap:28px;">
+      
+      <!-- Persona 1 -->
+      <div class="persona-card">
+        <h3>💻 The All-in One Operator</h3>
+        <ul>
+          <li>Saved with a Structured Digital Foundation.</li>
+          <li>Automated Workflows that Reduce Manual Effort.</li>
+          <li>A Website and Profiles Built to Capture leads.</li>
+        </ul>
+      </div>
+
+      <!-- Persona 2 -->
+      <div class="persona-card">
+        <h3>🚀 The Active But Plateaued Team</h3>
+        <ul>
+          <li>Saved with a Strategy That Aligns Every Effort.</li>
+          <li>Centralised Analytics and Connected Reporting.</li>
+          <li>Campaigns Designed for Measurable Growth.</li>
+        </ul>
+      </div>
+
+      <!-- Persona 3 -->
+      <div class="persona-card">
+        <h3>🏢 The Half-Structured Organisation</h3>
+        <ul>
+          <li>Saved with Proven Programs and Initiatives.</li>
+          <li>Bundled Services Tailored to Stage of Growth.</li>
+          <li>A Roadmap that Converts Scattered Assets into order.</li>
+          <li>Execution Tested across Multiple Business Models.</li>
+          <li>Acceleration Without Complexity.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <div style="text-align:center; margin-top:56px;">
+      <a href="#" class="cta-link">See Programs →</a>
+      <a href="#" class="cta-link">See Pricing →</a>
+    </div>
+  </div>
+</section>
+
+  <section id="supportSection" aria-labelledby="supportTitle" class="support-section">
+
+    <canvas id="supportCanvas" aria-hidden="true" class="support-canvas"></canvas>
+
+    <div class="support-wrap">
+      <h2 id="supportTitle" class="support-title">
+        We'll Support You 💖 All The Way
+      </h2>
+
+      <div class="support-meta" role="list">
+        <div class="meta-pill" role="listitem"><span aria-hidden="true">🎧</span><span>24/7 Availability</span></div>
+        <div class="meta-pill" role="listitem"><span aria-hidden="true">🧰</span><span>100+ Resources</span></div>
+      </div>
+
+      <!-- SUPPORT GRID -->
+      <div class="support-grid" role="list">
+        <article class="support-card" tabindex="0" role="article" aria-labelledby="s1">
+          <h3 id="s1">Live Chat, Email, Phone Support</h3>
+          <p class="muted">Instant &amp; human. Our support covers triage, escalation, and tactical fixes that keep campaigns alive.</p>
+        </article>
+
+        <article class="support-card" tabindex="0" role="article" aria-labelledby="s2">
+          <h3 id="s2">Dedicated Account Managers</h3>
+          <p class="muted">A real human partner assigned to your brand, focused on strategy, ops, and measurable outcomes.</p>
+        </article>
+
+        <article class="support-card" tabindex="0" role="article" aria-labelledby="s3">
+          <h3 id="s3">Proactive Monitoring</h3>
+          <p class="muted">Systems watch your stack 24/7 — anomalies ping our ops so you never miss a beat.</p>
+        </article>
+      </div>
+
+      <div class="support-lower">
+        <!-- FAQ -->
+        <div class="faq" aria-label="Frequently Asked Questions">
+          <h4 class="faq-title">Frequently Asked Questions</h4>
+
+          <div class="accordion" role="list" aria-label="FAQ list">
+            <div class="acc-item" data-open="false">
+              <button class="acc-btn" aria-expanded="false">How quickly will I see results?</button>
+              <div class="acc-panel" hidden>Timeline depends on the service—we aim to deliver measurable changes within 30–90 days for most programs.</div>
+            </div>
+
+            <div class="acc-item" data-open="false">
+              <button class="acc-btn" aria-expanded="false">Do you offer custom packages?</button>
+              <div class="acc-panel" hidden>Yes — we tailor programs to stage, budget, and risk tolerance. Packages are modular and stackable.</div>
+            </div>
+
+            <div class="acc-item" data-open="false">
+              <button class="acc-btn" aria-expanded="false">What support channels are included?</button>
+              <div class="acc-panel" hidden>Live chat, email, phone, and a dedicated account manager for enterprise plans. SLA options available.</div>
+            </div>
+
+            <a href="#" class="mini-link" aria-label="See FAQs">See FAQs →</a>
+          </div>
+        </div>
+
+        <!-- Quick links panel -->
+        <aside class="resources" aria-label="Getting started and resources">
+          <div class="resource-tile" tabindex="0" role="link" aria-label="Getting Started with GRID — View Workflow">
+            <strong>Getting Started with GRID</strong>
+            <p class="muted">Step-by-step guide on how GRID handles your growth without tedious sign-ups.</p>
+            <span class="link-txt">View Workflow →</span>
+          </div>
+
+          <div class="resource-tile" tabindex="0" role="link" aria-label="Performance Snapshot — View Sample Dashboard">
+            <strong>Performance Snapshot</strong>
+            <p class="muted">See how GRID tracks campaigns and growth with ready-made templates.</p>
+            <span class="link-txt">View Sample Dashboard →</span>
+          </div>
+
+          <div class="resource-tile" tabindex="0" role="link" aria-label="Insights & Tips — Explore Tips">
+            <strong>Insights & Tips</strong>
+            <p class="muted">Curated tips and Q&amp;A for brands leveraging GRID.</p>
+            <span class="link-txt">Explore Tips →</span>
+          </div>
+
+          <div class="resource-tile" tabindex="0" role="link" aria-label="Articles & Guides — Read Articles">
+            <strong>Articles & Guides</strong>
+            <p class="muted">Short reads on growth strategies, marketing tactics and brand success stories.</p>
+            <span class="link-txt">Read Articles →</span>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+<section id="preFooter">
+  <canvas id="preFooterCanvas"></canvas>
+  
+  <div class="preFooter-content">
+    <h2 id="preFooterTitle">Ready To Take The Leap?</h2>
+    <p>Grid is built to evolve with you — launch faster, grow smarter, dominate chaos.</p>
+    
+    <form id="newsletterForm">
+  <input type="email" id="email" name="email" placeholder="Enter your email address" required>
+  <button type="submit" class="ctaBtn">Subscribe</button>
+</form>
+
+
+<div id="formMessage" style="text-align:center; font-family:'Inter', sans-serif; margin-top:10px;"></div>
+
+<script>
+document.getElementById("newsletterForm").addEventListener("submit", async function(e) {
+  e.preventDefault();
+
+  const email = document.getElementById("email").value;
+  const messageBox = document.getElementById("formMessage");
+
+  // Reset message
+  messageBox.innerHTML = "";
+  messageBox.style.color = "#00b050";
+
+  const data = {
+    fields: [
+      { name: "email", value: email }
+    ],
+    legalConsentOptions: {
+      consent: {
+        consentToProcess: true,
+        text: "I agree to receive marketing emails and updates from Grid Digitals.",
+        communications: [
+          {
+            value: true,
+            subscriptionTypeId: 1386525112,
+            text: "I agree to receive marketing information from Grid Digitals."
+          }
+        ]
+      }
+    }
+  };
+
+  try {
+    const response = await fetch("https://api.hsforms.com/submissions/v3/integration/submit/146989917/c1429f37-bbda-464d-bed9-6c2ec2a8221e", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data)
+    });
+
+    const result = await response.json();
+
+    if (response.ok) {
+      messageBox.innerHTML = "✅ You’ve successfully subscribed!";
+      messageBox.style.color = "#00b050"; // Green
+      document.getElementById("newsletterForm").reset();
+    } else {
+      console.error("HubSpot error:", result);
+      messageBox.innerHTML = "⚠️ Something went wrong. Please try again.";
+      messageBox.style.color = "#ff3b30"; // Red
+    }
+  } catch (error) {
+    console.error("Network error:", error);
+    messageBox.innerHTML = "⚠️ Network error. Please try again later.";
+    messageBox.style.color = "#ff3b30";
+  }
+});
+</script>
+
+
+
+    <a href="#start" class="ctaBtn main-cta">Start Your Journey →</a>
+  </div>
+</section>
+
+
+<footer id="footer">
+  <div class="footer-core">
+    <!-- About -->
+    <div class="f-col">
+      <h4>GRID</h4>
+      <p>Your structured digital foundation. Wherever the chaos, Grid gives you the edge.</p>
+    </div>
+    <!-- Links -->
+    <div class="f-col">
+      <h4>Explore</h4>
+      <ul>
+        <li><a href="programs.html">Programs</a></li>
+        <li><a href="#">Pricing</a></li>
+        <li><a href="#">FAQs</a></li>
+        <li><a href="#">Articles</a></li>
+      </ul>
+    </div>
+    <!-- Resources -->
+    <div class="f-col">
+      <h4>Resources</h4>
+      <ul>
+        <li><a href="#">Workflow</a></li>
+        <li><a href="#">Templates</a></li>
+        <li><a href="#">Guides</a></li>
+        <li><a href="#">Tips</a></li>
+      </ul>
+    </div>
+  </div>
+  <p class="footer-copy">© 2025 Grid Technologies. All Rights Reserved.</p>
+</footer>
+
+
+<script src="index.js"></script>
+</body>
+</html>
+

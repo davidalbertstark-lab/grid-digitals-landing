@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GRID Digitals</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+<section id="contact-footer">
+  <canvas id="stars"></canvas>
+  <div class="footer-content">
+    <h2>Contact Us</h2>
+    <p>Let’s build something legendary together 🚀</p>
+    <form class="contact-form">
+      <input type="text" placeholder="Your Name" required>
+      <input type="email" placeholder="Your Email" required>
+      <textarea placeholder="Your Message" required></textarea>
+      <button type="submit">Send Message</button>
+    </form>
+
+    <!-- Social Links -->
+    <div class="footer-social">
+      <a href="https://facebook.com" class="facebook" target="_blank" aria-label="Facebook">
+        <i class="fab fa-facebook-f"></i>
+      </a>
+      <a href="https://instagram.com" class="instagram" target="_blank" aria-label="Instagram">
+        <i class="fab fa-instagram"></i>
+      </a>
+      <a href="https://x.com" class="twitter" target="_blank" aria-label="Twitter">
+        <i class="fab fa-x-twitter"></i>
+      </a>
+      <a href="https://linkedin.com" class="linkedin" target="_blank" aria-label="LinkedIn">
+        <i class="fab fa-linkedin-in"></i>
+      </a>
+    </div>
+
+    <!-- Footer links -->
+    <div class="footer-links">
+      <div>
+        <h4>Company</h4>
+        <a href="#">About Us</a>
+        <a href="#">Careers</a>
+        <a href="#">Blog</a>
+      </div>
+      <div>
+        <h4>Legal</h4>
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+        <a href="#">Cookies</a>
+      </div>
+      <div>
+        <h4>Support</h4>
+        <a href="#">Help Center</a>
+        <a href="#">Contact</a>
+        <a href="#">FAQs</a>
+      </div>
+    </div>
+
+    <!-- Footer bottom -->
+    <div class="footer-bottom">
+      <p>© 2025 GRID Digitals. All rights reserved.</p>
+    </div>
+  </div>
+</section>
+
+<script>
+  const canvas = document.getElementById("stars");
+  const ctx = canvas.getContext("2d");
+
+  let stars = [];
+  const numStars = 200;
+  let starsGlow = false;
+  let starSpeed = 1; // default slow
+
+  function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+  window.addEventListener("resize", resizeCanvas);
+  resizeCanvas();
+
+  function createStars() {
+    stars = [];
+    for (let i = 0; i < numStars; i++) {
+      stars.push({
+        x: (Math.random() - 0.5) * canvas.width,
+        y: (Math.random() - 0.5) * canvas.height,
+        z: Math.random() * canvas.width,
+      });
+    }
+  }
+  createStars();
+
+  function drawStars() {
+    ctx.fillStyle = "black";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    for (let i = 0; i < numStars; i++) {
+      let star = stars[i];
+
+      star.z -= starSpeed; // speed controlled by hover
+      if (star.z <= 0) {
+        star.z = canvas.width;
+        star.x = (Math.random() - 0.5) * canvas.width;
+        star.y = (Math.random() - 0.5) * canvas.height;
+      }
+
+      let k = 128.0 / star.z;
+      let px = star.x * k + canvas.width / 2;
+      let py = star.y * k + canvas.height / 2;
+
+      if (px >= 0 && px <= canvas.width && py >= 0 && py <= canvas.height) {
+        let size = (1 - star.z / canvas.width) * 3;
+        ctx.beginPath();
+        ctx.arc(px, py, size, 0, Math.PI * 2);
+        ctx.fillStyle = starsGlow
+          ? "rgba(255,255,255,0.9)" // glowing white on hover
+          : "rgba(255,255,255,0.8)"; // default slow white
+        ctx.fill();
+      }
+    }
+  }
+
+  function animateStars() {
+    drawStars();
+    requestAnimationFrame(animateStars);
+  }
+  animateStars();
+
+  const footer = document.querySelector("#contact-footer");
+  footer.addEventListener("mouseover", () => {
+    starsGlow = true;
+    starSpeed = 5; 
+  });
+  footer.addEventListener("mouseout", () => {
+    starsGlow = false;
+    starSpeed = 1; // back to slow
+  });
+</script>
+
+<style>
+  :root {
+    --grid-green-gradient: linear-gradient(90deg, #013220, #0FFFEB);
+    --grid-green-solid: #026c3c;
+  }
+
+  body{
+    box-sizing: border-box;
+    margin: 0;
+  }
+
+  #contact-footer {
+    position: relative;
+    background: black;
+    color: white;
+    padding: 6rem 2rem;
+    text-align: center;
+    overflow: hidden;
+  }
+
+  #stars {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 0;
+  }
+
+  .footer-content {
+    position: relative;
+    z-index: 1;
+    max-width: 900px;
+    margin: auto;
+  }
+
+  .footer-content h2 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    background: var(--grid-green-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .footer-content p {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+  }
+
+  .contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .contact-form input,
+  .contact-form textarea {
+    padding: 1rem;
+    border-radius: 8px;
+    border: none;
+    background: #111;
+    color: white;
+    outline: none;
+    font-size: 1rem;
+  }
+
+  .contact-form button {
+    padding: 1rem;
+    border: none;
+    border-radius: 8px;
+    background: var(--grid-green-gradient);
+    color: black;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+
+  .contact-form button:hover {
+    opacity: 0.85;
+  }
+
+  .footer-social {
+    margin-top: 2rem;
+  }
+
+  .footer-social a {
+    margin: 0 10px;
+    font-size: 20px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: inline-block;
+    color: #ccc;
+  }
+
+  .footer-social a:hover {
+    transform: scale(1.2);
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
+  }
+
+  .footer-social .facebook i { color: #1877f2; }
+  .footer-social .instagram i { color: #e4405f; }
+  .footer-social .twitter i { color: #ccc; }
+  .footer-social .linkedin i { color: #0077b5; }
+
+  .footer-links {
+    margin-top: 3rem;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    text-align: left;
+  }
+
+  .footer-links h4 {
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+    background: var(--grid-green-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .footer-links a {
+    display: block;
+    color: #ccc;
+    font-size: 0.95rem;
+    margin-bottom: 0.5rem;
+    transition: color 0.3s ease;
+  }
+
+  .footer-links a:hover {
+    color: white;
+  }
+
+  .footer-bottom {
+    margin-top: 3rem;
+    font-size: 0.9rem;
+    opacity: 0.8;
+  }
+</style>
+</body>
+</html>

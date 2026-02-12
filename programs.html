@@ -1,0 +1,613 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>GRID Growth Architecture Modules — Program</title>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
+
+  <style>
+    /* =========================
+       THEME / BASE
+       ========================= */
+    :root{
+      --bg:#06070a;
+      --panel:#0e1114;
+      --muted:#bfc7d6;
+      --white:#eaf6ff;
+      --accent-1:#00b050;
+      --accent-2:#00f2fe;
+      --ease: cubic-bezier(.2,.9,.28,1);
+      --max-width:1100px;
+    }
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial;
+      background:var(--bg);
+      color:var(--white);
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      overflow-x:hidden;
+    }
+
+    /* Canvas background sits behind everything */
+    #bgCanvas {
+      position:fixed; inset:0; width:100%; height:100%; z-index:0; pointer-events:none;
+      mix-blend-mode:screen; opacity:0.98;
+    }
+
+    /* Page wrapper */
+    .page {
+      position:relative; z-index:6; max-width:var(--max-width); margin:0 auto; padding:48px 20px 120px;
+    }
+
+    /* HERO TITLE */
+    .hero {
+      display:block; text-align:center; margin:28px 0 8px; position:relative;
+      padding-top:18px; padding-bottom:18px;
+    }
+    #programHeroTitle {
+      display:inline-block; font-family:Orbitron, sans-serif; font-weight:900;
+      font-size:clamp(2.0rem,5.2vw,3.6rem); line-height:1.02; letter-spacing:-0.02em;
+      color:var(--accent-2);
+      white-space:pre-wrap;
+      transform-origin:center;
+    }
+    #programHeroTitle span.drop-letter { display:inline-block; will-change:transform,opacity; backface-visibility:hidden; }
+
+    /* Sparks canvas sits above bg but below content */
+    canvas.sparksCanvas { position:fixed; left:0; top:0; width:100%; height:100%; pointer-events:none; z-index:5; }
+
+    /* MAIN CONTENT (unchanged text) */
+    .content { margin-top:28px; color:var(--muted); font-size:1.02rem; line-height:1.7; max-width:900px; margin-left:auto; margin-right:auto; }
+    .content p { margin:1rem 0; }
+    .content h2 { color:var(--accent-2); margin-top:1.6rem; font-family:Orbitron, sans-serif; font-weight:700; margin-bottom:0.6rem; font-size:1.15rem; }
+
+    /* CTA */
+    .cta-row { display:flex; gap:14px; justify-content:center; margin-top:18px; margin-bottom:28px; }
+    .btn-primary {
+      background:linear-gradient(90deg,var(--accent-1),var(--accent-2));
+      color:#00120a; padding:12px 18px; font-weight:900; border-radius:12px; border:none; cursor:pointer;
+      box-shadow:0 12px 40px rgba(0,176,80,0.12);
+      transition: transform .16s var(--ease), box-shadow .16s var(--ease);
+      text-decoration:none;
+      display:inline-flex; align-items:center; gap:10px;
+    }
+    .btn-primary:hover{ transform:translateY(-4px); box-shadow:0 28px 80px rgba(0,242,254,0.08); }
+
+    /* Subtle highlight for key phrase parts (we won't change text; just styling hook) */
+    .hl { color:var(--white); font-weight:700; }
+
+    /* Paragraph reveal helper */
+    .reveal { opacity:0; transform: translateY(18px) rotate(-0.4deg); transition: transform .72s var(--ease), opacity .5s ease; will-change:transform,opacity; }
+
+    /* small-screen responsive */
+    @media (max-width:720px){
+      .page{ padding:28px 16px 80px; }
+      #programHeroTitle{ font-size:clamp(1.6rem,8.2vw,2.6rem); }
+      .content { font-size:1rem; line-height:1.5; padding:0 4px; }
+    }
+
+    /* reduced motion */
+    @media (prefers-reduced-motion: reduce){
+      #programHeroTitle span.drop-letter{ transition:none !important; transform:none !important; opacity:1 !important; }
+      .reveal { transition:none; transform:none; opacity:1 !important; }
+      canvas { display:none !important; }
+    }
+
+    /* small decorative underline for CTA on focus */
+    .btn-primary:focus { outline:2px solid rgba(255,255,255,0.06); outline-offset:4px; }
+  </style>
+</head>
+<body>
+
+  <!-- BACKGROUND CANVAS (unique multi-layered visual) -->
+  <canvas id="bgCanvas" aria-hidden="true"></canvas>
+  <!-- Sparks canvas used for title sparks and micro bursts -->
+  <canvas id="sparksCanvas" class="sparksCanvas" aria-hidden="true"></canvas>
+
+  <main class="page" id="page">
+    <!-- HERO -->
+    <header class="hero" role="banner" aria-label="Program hero">
+      <!-- The title text must remain exactly as provided -->
+      <h1 id="programHeroTitle" aria-live="polite" aria-atomic="true">GRID Growth Architecture Modules</h1>
+
+      <!-- CTAs -->
+      <div class="cta-row" role="group" aria-label="Primary actions">
+        <a class="btn-primary" id="initScan" href="#scan" role="button">Initiate Growth Scan →</a>
+        <a class="btn-primary" id="exploreModules" href="#modules" role="button" style="background:transparent;border:1px solid rgba(255,255,255,0.04); color:var(--accent-2);">Explore Modules →</a>
+      </div>
+    </header>
+
+    <!-- MAIN COPY — EXACT CONTENT, unchanged (only wrapped for JS reveals) -->
+    <article class="content" id="mainContent" role="main">
+      <p class="reveal" id="p0">A structured program to connect and accelerate brand growth.
+Real growth doesn’t work because of efforts. It comes from systems that connect.
+Scattered efforts and endless testing aren’t growth. A connected system, where every
+effort is strategized, executed, measured, and re-strategized, is what drives growth
+forward.
+GRID’s Growth Architecture Modules are a complete program designed to diagnose,
+repair, and align your digital ecosystem So growth compounds.
+It’s a structured progression — a modular framework that adapts to your brand’s current
+state and builds the connections that drive long-term results.</p>
+
+      <h2>Why This Program Exists</h2>
+      <p class="reveal" id="p1">Disconnected digital activity wastes resources. Campaigns run but don’t align.
+Touchpoints exist but don’t reinforce each other. Analytics track but don’t inform.
+The Growth Architecture Modules exist to close those breaks. Each module is a focused
+intervention, and together they form a growth system that compounds over time.</p>
+
+      <h2>How the Program Works</h2>
+      <p class="reveal" id="p2"><strong>1. Onboard with a Growth Scan</strong>
+Every program starts with a diagnostic. The scan identifies where growth momentum is
+breaking down.</p>
+
+      <p class="reveal" id="p3"><strong>2. Progress Through Modules</strong>
+Based on the scan, modules are deployed in sequence. Each is surgical, high-impact, and
+designed to work in harmony with the others.</p>
+
+      <p class="reveal" id="p4"><strong>3. Build a Connected Engine</strong>
+As modules stack, your brand shifts from scattered activity to a system that generates
+clarity, alignment, and acceleration.</p>
+
+      <h2>What You Gain</h2>
+      <p class="reveal" id="p5">Clarity — precise visibility into where growth leaks and how to fix them.
+<br>Connection — integration across digital touchpoints so each one reinforces the other.
+<br>Acceleration — measurable wins that build momentum toward scale.</p>
+
+      <h2>Program Pathway</h2>
+      <p class="reveal" id="p6">The Growth Architecture Modules are a self-contained program, but also a gateway.
+Brands that complete them are fully prepared to enter GRID’s Digital Brand Growth
+Program, where the entire ecosystem is scaled into a long-term growth engine.</p>
+
+      <h2>Impact in Practice</h2>
+      <p class="reveal" id="p7">Brands who complete the modules report:
+ROI lift from campaigns once aligned into a connected funnel.
+Conversion improvements without Marketing spend Waste.
+Strategic clarity that unlocked their next stage of growth.</p>
+
+      <h2>Your Next Step</h2>
+      <p class="reveal" id="p8">The first move is simple: start the Growth Scan. It’s the entry point that launches you
+into the program.</p>
+
+      <p class="reveal" id="p9"><a class="btn-primary" href="#start" id="finalCTA">Initiate Growth Scan →</a></p>
+    </article>
+  </main>
+
+  <script>
+  /*
+    FULL-PAGE "MAD" ENHANCEMENTS (single-file):
+    - Background visual: layered neon planes + metallic shards + flow-lines (unique, not reused)
+    - Title drop was already requested; here we keep it but add sparks on land (micro-bursts)
+    - Paragraph reveals sequentially when in view, with micro sparks at end of each reveal line
+    - CTA interaction: pulse, small particle bursts on hover/click
+    - Respect prefers-reduced-motion
+  */
+
+  (function(){
+    // quick flags
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    /* ------------------------------
+       CANVASES setup
+       ------------------------------ */
+    const bgCanvas = document.getElementById('bgCanvas');
+    const bgCtx = bgCanvas.getContext('2d');
+    const sparksCanvas = document.getElementById('sparksCanvas');
+    const sparksCtx = sparksCanvas.getContext('2d');
+
+    function resizeAll(){
+      const DPR = Math.max(1, window.devicePixelRatio || 1);
+      bgCanvas.width = innerWidth * DPR; bgCanvas.height = innerHeight * DPR;
+      bgCanvas.style.width = innerWidth + 'px'; bgCanvas.style.height = innerHeight + 'px';
+      bgCtx.setTransform(DPR,0,0,DPR,0,0);
+
+      sparksCanvas.width = innerWidth * DPR; sparksCanvas.height = innerHeight * DPR;
+      sparksCanvas.style.width = innerWidth + 'px'; sparksCanvas.style.height = innerHeight + 'px';
+      sparksCtx.setTransform(DPR,0,0,DPR,0,0);
+    }
+    window.addEventListener('resize', resizeAll);
+    resizeAll();
+
+    /* ------------------------------
+       BACKGROUND VISUAL: LAYERS
+       - Layered ribbon waves + floating shards + linking flow-lines
+       - React to mouse position for parallax
+       ------------------------------ */
+    let mouse = { x: innerWidth/2, y: innerHeight/2 };
+    addEventListener('mousemove', (e) => { mouse.x = e.clientX; mouse.y = e.clientY; });
+    addEventListener('mouseleave', ()=> { mouse.x = innerWidth/2; mouse.y = innerHeight/2; });
+
+    // create shards
+    const shards = [];
+    function initShards(){
+      shards.length = 0;
+      const count = Math.max(8, Math.round(window.innerWidth / 160));
+      for(let i=0;i<count;i++){
+        shards.push({
+          x: Math.random()*innerWidth,
+          y: Math.random()*innerHeight,
+          w: 40 + Math.random()*160,
+          h: 10 + Math.random()*60,
+          ang: Math.random()*Math.PI*2,
+          vx: (Math.random()-0.5)*0.4,
+          vy: (Math.random()-0.5)*0.4,
+          hue: 180 + Math.random()*80,
+          alpha: 0.06 + Math.random()*0.12
+        });
+      }
+    }
+    initShards();
+    window.addEventListener('resize', initShards);
+
+    // flow nodes for linking lines
+    const nodes = [];
+    function initNodes(){
+      nodes.length = 0;
+      const cols = Math.max(6, Math.round(innerWidth / 220));
+      const rows = Math.max(3, Math.round(innerHeight / 220));
+      for(let i=0;i<cols;i++){
+        for(let j=0;j<rows;j++){
+          nodes.push({
+            x: (i+0.5) * innerWidth/cols + (Math.random()-0.5)*40,
+            y: (j+0.5) * innerHeight/rows + (Math.random()-0.5)*40,
+            vx: (Math.random()-0.5)*0.25,
+            vy: (Math.random()-0.5)*0.25,
+            hue: 180 + Math.random()*60,
+            r: 0.6 + Math.random()*1.4
+          });
+        }
+      }
+    }
+    initNodes();
+    window.addEventListener('resize', initNodes);
+
+    // wave layers (vertical positions, amplitude)
+    const waves = [
+      { amp: 30, speed: 0.0008, hue: 185, y: innerHeight*0.28 },
+      { amp: 46, speed: 0.0011, hue: 200, y: innerHeight*0.48 },
+      { amp: 68, speed: 0.0009, hue: 215, y: innerHeight*0.7 }
+    ];
+
+    let last = performance.now();
+    function drawBackground(now){
+      const dt = now - last; last = now;
+      bgCtx.clearRect(0,0,innerWidth,innerHeight);
+
+      // dark fill
+      bgCtx.fillStyle = 'rgba(2,6,12,0.86)';
+      bgCtx.fillRect(0,0,innerWidth,innerHeight);
+
+      // parallax offset based on mouse
+      const px = (mouse.x - innerWidth/2)/innerWidth;
+      const py = (mouse.y - innerHeight/2)/innerHeight;
+
+      // ribbons / waves
+      waves.forEach((wL, idx) => {
+        const time = now * wL.speed;
+        const baseY = (wL.y / innerHeight) * innerHeight;
+        bgCtx.beginPath();
+        const step = Math.max(4, Math.round(innerWidth / 80));
+        bgCtx.moveTo(0, innerHeight);
+        bgCtx.lineTo(0, baseY);
+        for(let x=0;x<=innerWidth;x+=step){
+          const nx = (x/innerWidth) * Math.PI * 2;
+          const wob = Math.sin(nx * (1+idx*0.18) + time * 2.2) * wL.amp;
+          const mx = px * (30 * (idx-1));
+          const my = py * (40 * idx);
+          const yPos = baseY + wob - my + mx;
+          bgCtx.lineTo(x, yPos);
+        }
+        bgCtx.lineTo(innerWidth, innerHeight);
+        bgCtx.closePath();
+        const g = bgCtx.createLinearGradient(0, baseY-120, 0, baseY+240);
+        g.addColorStop(0, `hsla(${wL.hue},85%,60%,0.12)`);
+        g.addColorStop(1, 'rgba(2,6,23,0)');
+        bgCtx.fillStyle = g;
+        bgCtx.fill();
+
+        // thin stroke
+        bgCtx.strokeStyle = `rgba(0,242,254,${0.05 + idx*0.02})`;
+        bgCtx.lineWidth = 0.6;
+        bgCtx.stroke();
+      });
+
+      // floating shards
+      shards.forEach(s=>{
+        s.x += s.vx + px*0.6;
+        s.y += s.vy + py*0.6;
+        // wrap
+        if(s.x < -s.w) s.x = innerWidth + s.w;
+        if(s.x > innerWidth + s.w) s.x = -s.w;
+        if(s.y < -s.h) s.y = innerHeight + s.h;
+        if(s.y > innerHeight + s.h) s.y = -s.h;
+
+        bgCtx.save();
+        bgCtx.translate(s.x, s.y);
+        bgCtx.rotate(s.ang);
+        const grad = bgCtx.createLinearGradient(-s.w/2, -s.h/2, s.w/2, s.h/2);
+        grad.addColorStop(0, `hsla(${s.hue - 20}, 95%, 50%, ${s.alpha})`);
+        grad.addColorStop(1, `rgba(2,6,23,0)`);
+        bgCtx.fillStyle = grad;
+        bgCtx.fillRect(-s.w/2, -s.h/2, s.w, s.h);
+        bgCtx.restore();
+      });
+
+      // nodes + linking lines (flow-lines)
+      for(let i=0;i<nodes.length;i++){
+        const a = nodes[i];
+        // subtle motion
+        a.x += a.vx + px*0.3;
+        a.y += a.vy + py*0.3;
+        // line to near nodes
+        for(let j=i+1;j<nodes.length;j++){
+          const b = nodes[j];
+          const dx = a.x - b.x, dy = a.y - b.y;
+          const d2 = dx*dx + dy*dy;
+          if(d2 < 14000){
+            const alpha = 0.04*(1 - d2/14000);
+            bgCtx.strokeStyle = `rgba(0,242,254,${alpha})`;
+            bgCtx.lineWidth = 0.4;
+            bgCtx.beginPath();
+            bgCtx.moveTo(a.x, a.y);
+            bgCtx.lineTo(b.x, b.y);
+            bgCtx.stroke();
+          }
+        }
+        // node glow
+        const rg = bgCtx.createRadialGradient(a.x, a.y, 0, a.x, a.y, 14);
+        rg.addColorStop(0, `hsla(${a.hue},90%,60%,0.09)`);
+        rg.addColorStop(1, 'rgba(0,0,0,0)');
+        bgCtx.fillStyle = rg;
+        bgCtx.beginPath();
+        bgCtx.arc(a.x, a.y, a.r*8, 0, Math.PI*2);
+        bgCtx.fill();
+      }
+
+      if(!reduce) requestAnimationFrame(drawBackground);
+    }
+    if(!reduce) requestAnimationFrame(drawBackground);
+
+    /* ------------------------------
+       SPARKS engine (for title + paragraph micro-bursts + CTA)
+       ------------------------------ */
+    let sparks = [];
+    function spawnSparks(x,y, count=6){
+      for(let i=0;i<count;i++){
+        sparks.push({
+          x, y,
+          vx: (Math.random()-0.5)*6,
+          vy: (Math.random()-1.5)*-3,
+          life: 30 + Math.random()*40,
+          size: 1 + Math.random()*2,
+          hue: 180 + Math.random()*80
+        });
+      }
+    }
+
+    function drawSparks(){
+      sparks = sparks.filter(s => s.life > 0);
+      sparks.forEach(s => {
+        sparksCtx.beginPath();
+        sparksCtx.fillStyle = `hsla(${s.hue}, 100%, 60%, ${Math.min(1, s.life / 50)})`;
+        sparksCtx.arc(s.x, s.y, s.size, 0, Math.PI*2);
+        sparksCtx.fill();
+        s.x += s.vx; s.y += s.vy; s.vy += 0.12; s.life--;
+      });
+      // fade canvas slightly (creates trails)
+      sparksCtx.globalCompositeOperation = 'destination-out';
+      sparksCtx.fillStyle = 'rgba(0,0,0,0.08)';
+      sparksCtx.fillRect(0,0,innerWidth,innerHeight);
+      sparksCtx.globalCompositeOperation = 'source-over';
+      requestAnimationFrame(drawSparks);
+    }
+    if(!reduce) drawSparks();
+
+    /* ------------------------------
+       TITLE DROP + SPARKS + IMPACT SHAKE
+       ------------------------------ */
+    (function titleDrop(){
+      const titleEl = document.getElementById('programHeroTitle');
+      const raw = titleEl.textContent;
+      // Keep exact content for accessibility via offscreen node
+      const sr = document.createElement('div');
+      sr.className = 'sr-only';
+      sr.textContent = raw;
+      sr.setAttribute('aria-hidden','false');
+      // Prepare visual title
+      titleEl.setAttribute('aria-hidden','true');
+      titleEl.textContent = '';
+      const letters = [];
+      for(const ch of raw){
+        if(ch === ' '){
+          titleEl.appendChild(document.createTextNode(' '));
+        } else {
+          const s = document.createElement('span');
+          s.className = 'drop-letter';
+          s.textContent = ch;
+          s.style.opacity = '0';
+          titleEl.appendChild(s);
+          letters.push(s);
+        }
+      }
+      titleEl.parentNode.insertBefore(sr, titleEl.nextSibling);
+
+      if(reduce){
+        letters.forEach(l => { l.style.opacity = 1; });
+        return;
+      }
+
+      const baseDistance = Math.min(900, Math.round(window.innerHeight * 0.6));
+      // animate per-letter
+      function easeOutElastic(t){
+        const c4 = (2*Math.PI)/3;
+        if(t===0) return 0; if(t===1) return 1;
+        return Math.pow(2,-10*t) * Math.sin((t*10 - 0.75)*c4) + 1;
+      }
+      letters.forEach((el, idx) => {
+        const rot = (Math.random()*36-18);
+        const extra = Math.random()*140;
+        const start = baseDistance + extra;
+        const jitterX = (Math.random()-0.5)*12;
+        el.style.transform = `translate3d(${jitterX}px, ${-start}px, 0) rotate(${rot}deg)`;
+        const delay = idx * 34;
+        const duration = 820;
+        const tStart = performance.now() + delay;
+        (function run(){
+          const now = performance.now();
+          const dt = now - tStart;
+          const t = Math.max(0, Math.min(1, dt / duration));
+          const p = easeOutElastic(t);
+          const curY = -start * (1 - p);
+          const curR = rot * (1 - p);
+          el.style.transform = `translate3d(${jitterX}px, ${curY}px, 0) rotate(${curR}deg)`;
+          el.style.opacity = Math.min(1, p * 1.12);
+          if(t < 1){
+            requestAnimationFrame(run);
+          } else {
+            // landed: spawn sparks & small page shake
+            const rect = el.getBoundingClientRect();
+            spawnSparks(rect.left + rect.width/2, rect.top + rect.height, 6);
+            // micro-shake effect on page
+            document.body.animate([
+              { transform: 'translateX(0px)' },
+              { transform: 'translateX(3px)' },
+              { transform: 'translateX(-3px)' },
+              { transform: 'translateX(0px)' }
+            ], { duration: 120, easing: 'ease-out' });
+          }
+        })();
+      });
+
+      // replay on re-enter
+      const io = new IntersectionObserver(entries=>{
+        entries.forEach(en=>{
+          if(en.isIntersecting){
+            // slight debounce
+            setTimeout(()=> {
+              letters.forEach(l => { l.style.opacity = 0; });
+              setTimeout(()=> { // re-run drop sequence
+                letters.forEach((el, idx) => {
+                  const rot = (Math.random()*36-18);
+                  const extra = Math.random()*140;
+                  const start = baseDistance + extra;
+                  const jitterX = (Math.random()-0.5)*12;
+                  el.style.transform = `translate3d(${jitterX}px, ${-start}px, 0) rotate(${rot}deg)`;
+                  el.style.opacity = 0;
+                  const delay = idx * 34;
+                  const duration = 820;
+                  const tStart = performance.now() + delay;
+                  (function run(){
+                    const now = performance.now();
+                    const dt = now - tStart;
+                    const t = Math.max(0, Math.min(1, dt / duration));
+                    const p = easeOutElastic(t);
+                    const curY = -start * (1 - p);
+                    const curR = rot * (1 - p);
+                    el.style.transform = `translate3d(${jitterX}px, ${curY}px, 0) rotate(${curR}deg)`;
+                    el.style.opacity = Math.min(1, p * 1.12);
+                    if(t < 1) requestAnimationFrame(run);
+                    else {
+                      const rect = el.getBoundingClientRect();
+                      spawnSparks(rect.left + rect.width/2, rect.top + rect.height, 5);
+                    }
+                  })();
+                });
+              }, 80);
+            }, 50);
+          }
+        });
+      }, { threshold: 0.3 });
+      io.observe(titleEl);
+    })();
+
+    /* ------------------------------
+       PARAGRAPHS: reveal sequentially with micro-sparks at end
+       ------------------------------ */
+    (function revealParagraphs(){
+      const paras = Array.from(document.querySelectorAll('.reveal'));
+      paras.forEach((p, idx)=>{
+        p.style.opacity = 0;
+      });
+      if(reduce){
+        paras.forEach(p => { p.style.opacity = 1; p.style.transform = 'none'; });
+        return;
+      }
+      const io = new IntersectionObserver(entries=>{
+        entries.forEach(en=>{
+          if(en.isIntersecting){
+            const p = en.target;
+            // reveal with stagger per-line (we'll do small stagger across paragraphs)
+            setTimeout(()=> {
+              p.style.transform = 'translateY(0) rotate(0deg)';
+              p.style.opacity = 1;
+              // micro sparks at paragraph end
+              const rect = p.getBoundingClientRect();
+              spawnSparks(rect.left + rect.width*0.66, rect.bottom - 6, 6);
+            }, 120);
+            io.unobserve(p);
+          }
+        });
+      }, { threshold: 0.18 });
+
+      paras.forEach(p => io.observe(p));
+    })();
+
+    /* ------------------------------
+       CTA interactions: hover burst + keyboard accessible pulse
+       ------------------------------ */
+    (function ctaBehavior(){
+      const ctas = document.querySelectorAll('.btn-primary');
+      ctas.forEach(cta=>{
+        cta.addEventListener('pointerenter', (e)=>{
+          // gentle pulse + spawn small sparks that drift upwards
+          cta.animate([{ transform:'translateY(0)' }, { transform:'translateY(-6px)' }], { duration:260, fill:'forwards', easing:'cubic-bezier(.2,.9,.28,1)'});
+          const rect = cta.getBoundingClientRect();
+          spawnSparks(rect.left + rect.width/2, rect.top + 6, 8);
+        });
+        cta.addEventListener('pointerleave', ()=> {
+          cta.animate([{ transform:'translateY(-6px)' }, { transform:'translateY(0)' }], { duration:200, easing:'ease-out' });
+        });
+        // click burst
+        cta.addEventListener('click', (ev)=>{
+          const rect = cta.getBoundingClientRect();
+          spawnSparks(rect.left + rect.width/2, rect.top + rect.height/2, 18);
+          // small click ripple on page background (visual flourish)
+          document.body.animate([{ filter: 'brightness(1.0)' }, { filter:'brightness(1.06)' }, { filter:'brightness(1.0)' }], { duration:340 });
+        });
+        // keyboard
+        cta.addEventListener('keydown', (e)=>{
+          if(e.key === 'Enter' || e.key === ' '){
+            e.preventDefault();
+            cta.click();
+          }
+        });
+      });
+    })();
+
+    // keep things tidy: ensure canvases clear on tab hidden
+    document.addEventListener('visibilitychange', ()=> {
+      if(document.hidden){
+        // pause heavy loops by replacing draw callbacks — easiest approach is to stop animations via display none (not perfect)
+        // But for simplicity, just reduce spawn rates; we won't implement full pause here.
+      }
+    });
+
+    // initial micro burst to call attention
+    setTimeout(()=> {
+      const titleRect = document.getElementById('programHeroTitle').getBoundingClientRect();
+      spawnSparks(titleRect.left + titleRect.width/3, titleRect.top + titleRect.height, 14);
+    }, 800);
+
+  })();
+  </script>
+
+
+
+
+
+</body>
+</html>
